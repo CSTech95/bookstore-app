@@ -36,17 +36,47 @@ public class UserController : ControllerBase
         IEnumerable<User> users = _dapper.LoadData<User>(sql);
         return users;
     }
-    //[HttpGet("User/{userId}")]
-    ////public IEnumerable<User> GetUsers()
-    //public User GetSingleUsers(int userId)
-    //{
-    //    return new User;
-    //    //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-    //    //{
-    //    //    Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-    //    //    TemperatureC = Random.Shared.Next(-20, 55),
-    //    //    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-    //    //})
-    //    //.ToArray();
-    //}
+
+    [HttpGet("User/{userId}")]
+    //public IEnumerable<User> GetUsers()
+    public User GetSingleUsers(int userId)
+    {
+        string sql = @"
+            SELECT [UserId],
+                [FirstName],
+                [LastName],
+                [Email],
+                [Gender],
+                [Active] FROM BookAppSchema.Users 
+                    WHERE userId = "+ userId.ToString();
+
+        User user = _dapper.LoadDataSingle<User>(sql);
+
+        return user;
+    }
+
+     [HttpPost("adduser")]
+    public IActionResult AddUser()
+    {
+        return Ok();
+    }
+
+    [HttpPut("edituser")]
+    public IActionResult EditUser(User user)
+    {
+        string sql = @"
+            UPDATE BookAppSchema.Users
+                SET   
+                    FirstName = '" + user.FirstName +
+                    "', LastName = '" + user.LastName +
+                    "', Email = '" + user.Email +
+                    "', Gender = '" + user.Gender +
+                    "', Active = '" + user.Active +
+                "'WHERE userId = " + user.UserId;
+            if(_dapper.Execute(sql))
+            {
+                return Ok();
+            }
+        throw new Exception("Failed to update user.");
+    }
 }

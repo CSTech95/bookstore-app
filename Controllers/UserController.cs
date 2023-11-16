@@ -1,3 +1,6 @@
+using BookStoreApp.Data;
+using BookStoreApp.Dtos;
+using BookStoreApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreApp.Controllers;
@@ -6,9 +9,6 @@ namespace BookStoreApp.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
- 
-
-
     DataContextDapper _dapper;
     public UserController(IConfiguration config)
     {
@@ -21,8 +21,7 @@ public class UserController : ControllerBase
         return _dapper.LoadDataSingle<DateTime>("SELECT GETDATE()");
     }
 
-    [HttpGet("Users/")]
-    //public IEnumerable<User> GetUsers()
+    [HttpGet("Users")]
     public IEnumerable<User> GetUsers()
     {
 
@@ -37,9 +36,8 @@ public class UserController : ControllerBase
         return users;
     }
 
-    [HttpGet("User/{userId}")]
-    //public IEnumerable<User> GetUsers()
-    public User GetSingleUsers(int userId)
+    [HttpGet("User/{Id}")]
+    public User GetSingleUser(int Id)
     {
         string sql = @"
             SELECT [UserId],
@@ -48,7 +46,7 @@ public class UserController : ControllerBase
                 [Email],
                 [Gender],
                 [Active] FROM BookAppSchema.Users 
-                    WHERE userId = "+ userId.ToString();
+                    WHERE userId = "+ Id.ToString();
 
         User user = _dapper.LoadDataSingle<User>(sql);
 
@@ -56,7 +54,7 @@ public class UserController : ControllerBase
     }
 
      [HttpPost("adduser")]
-    public IActionResult AddUser(User user)
+    public IActionResult AddUser(UserToAddDto user)
     {
         string sql = @"INSERT INTO BookAppSchema.Users(
            [FirstName],
@@ -96,4 +94,19 @@ public class UserController : ControllerBase
             }
         throw new Exception("Failed to update user");
     }
+
+    [HttpDelete("User/{Id}")]
+    public IActionResult DeleteUser(int Id)
+    {
+        string sql = @"
+            DELETE FROM BookAppSchema.Users
+                    WHERE userId = "+ Id.ToString();
+
+        if(_dapper.Execute(sql))
+            {
+                return Ok();
+            }
+        throw new Exception("Failed to Delete user");
+    }
+
 }

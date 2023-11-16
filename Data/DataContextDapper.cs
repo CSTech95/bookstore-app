@@ -2,7 +2,7 @@ using System.Data;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
-namespace BookStoreApp
+namespace BookStoreApp.Data
 {
     class DataContextDapper 
     {

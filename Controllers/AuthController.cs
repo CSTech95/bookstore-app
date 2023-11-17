@@ -55,7 +55,23 @@ namespace BookStoreApp.Controllers
                     sqlParameters.Add(passwordHashParameter);
                     if (_dapper.ExecuteSqlWithParameters(sqlAddAuth, sqlParameters))
                     {
-                        return Ok(); 
+                         string sqlAddUser = @"INSERT INTO BookAppSchema.Users(
+                           [FirstName],
+                                [LastName],
+                                [Email],
+                                [Gender],
+                                [Active] 
+                        ) VALUES (" +
+                                "'" + userForRegistration.FirstName +
+                                "', '" + userForRegistration.LastName +
+                                "', '" + userForRegistration.Email +
+                                "', '" + userForRegistration.Gender +
+                                "', 1)";
+                        if(_dapper.Execute(sqlAddUser))
+                        {
+                        return Ok();
+                        }
+            throw new Exception("Failed to Add user"); 
                     }
             throw new Exception("Failed to Register user"); 
                 }

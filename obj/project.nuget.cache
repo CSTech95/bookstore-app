@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qv1N+K+uZXHY3k//hM5ULmCAN8BNAWN+yHy1AoUPY8WbiFpZgC1+jSKiae/JJjfrR8xffldlzEP7fDTfpGxpxQ==",
+  "dgSpecHash": "wxkafG3EWnDd9kK7l02xmns7/1AWFfSmrOG3JtRtdUKHkBSZrVbBaiojhOw2wuWzeazXRrUFlxExxstbiTCMYg==",
   "success": true,
   "projectFilePath": "/Users/aser/Documents/dotnet-projects/BookStoreApp/BookStoreApp.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "/Users/aser/.nuget/packages/azure.core/1.25.0/azure.core.1.25.0.nupkg.sha512",
     "/Users/aser/.nuget/packages/azure.identity/1.7.0/azure.identity.1.7.0.nupkg.sha512",
     "/Users/aser/.nuget/packages/dapper/2.1.21/dapper.2.1.21.nupkg.sha512",
+    "/Users/aser/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.0/microsoft.aspnetcore.authentication.jwtbearer.7.0.0.nupkg.sha512",
     "/Users/aser/.nuget/packages/microsoft.aspnetcore.openapi/7.0.13/microsoft.aspnetcore.openapi.7.0.13.nupkg.sha512",
     "/Users/aser/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/Users/aser/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",

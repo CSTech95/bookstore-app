@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using BookStoreApp.Data;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BookStoreApp.Controllers
 {
@@ -87,6 +90,7 @@ namespace BookStoreApp.Controllers
                 [PasswordHash],
                 [PasswordSalt] FROM BookAppSchema.Auth WHERE Email = '" + 
                 userForLogin.Email + "'";
+
             UserForLoginConfirmationDto userForLoginConfirmation = _dapper.LoadDataSingle<UserForLoginConfirmationDto>(sqlForHashAndSalt);
 
             byte[] passwordHash = GetPasswordHash(userForLogin.Password, userForLoginConfirmation.PasswordSalt);
@@ -97,7 +101,15 @@ namespace BookStoreApp.Controllers
                     return StatusCode(401, "Incorrect Password");
                } 
             }
-            return Ok();
+            string userIdSql = @"
+                SELECT userId FROM BookAppSchema.Users WHERE Email = '" + 
+            userForLogin.Email + "'";
+
+            int userId = _dapper.LoadDataSingle<int>(userIdSql);
+
+            return Ok(new Dictionary<string, string> {
+                {"token", CreateToken(userId)}
+            });
         }
         private byte[] GetPasswordHash(string password, byte[] passwordSalt)
         {
@@ -111,6 +123,27 @@ namespace BookStoreApp.Controllers
                 iterationCount: 100000,
                 numBytesRequested: 256/8
             );
+        }
+
+        private string CreateToken(int userId)
+        {
+            Claim[] claims = new Claim[]
+            {
+                    new Claim("userId", userId.ToString())
+            };
+            SymmetricSecurityKey tokenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Appsettings:TokenKey").Value));
+
+            SigningCredentials credentials = new SigningCredentials(tokenKey, SecurityAlgorithms.HmacSha256Signature);
+
+            SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor()
+            {
+                Subject = new ClaimsIdentity(claims),
+                SigningCredentials = credentials,
+                Expires = DateTime.Now.AddDays(1)
+            };
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken token = tokenHandler.CreateToken(descriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }

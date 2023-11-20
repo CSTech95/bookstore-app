@@ -1,4 +1,4 @@
-namespace BookStoreApp.Dto
+namespace BookStoreApp.Dtos
 {
     public partial class UserForRegistrationDto
     {

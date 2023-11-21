@@ -22,7 +22,9 @@ namespace BookStoreApp
         {
             string sql = @"SELECT [BookId],
                     [BookTitle],
-                    [BookAuthor],
+                    [BookAuthorFirstName],
+                    [BookAuthorLastName],
+                    [Genre],
                     [BookImg],
                     [PublishedYear]
                 FROM BookAppSchema.Books;";
@@ -35,7 +37,9 @@ namespace BookStoreApp
         {
             string sql = @"SELECT [BookId],
                     [BookTitle],
-                    [BookAuthor],
+                    [BookAuthorFirstName],
+                    [BookAuthorLastName],
+                    [Genre],
                     [BookImg],
                     [PublishedYear]
                 FROM BookAppSchema.Books
@@ -43,18 +47,23 @@ namespace BookStoreApp
 
             return _dapper.LoadDataSingle<Book>(sql);
         }
+
         [HttpGet("BooksByAuthor/{author}")]
         public IEnumerable<Book> GetBooksByAuthor(string author)
         {
-            string sql = @"SELECT [BookId],
+            string sqlRes = @"SELECT [BookId],
                     [BookTitle],
-                    [BookAuthor],
+                    [BookAuthorFirstName],
+                    [BookAuthorLastName],
+                    [Genre],
                     [BookImg],
                     [PublishedYear]
                 FROM BookAppSchema.Books
-                    WHERE BookId =" + author;
+                    WHERE BookAuthorFirstName LIKE '%" + author + "'";
 
-            return _dapper.LoadData<Book>(sql);
+            Console.WriteLine(sqlRes);
+
+            return _dapper.LoadData<Book>(sqlRes);
         }
 
         //TODO

@@ -90,22 +90,25 @@ namespace BookStoreApp
             throw new Exception("Failed to Add Book");
         }
 
-        //TODO
-        //[HttpPut("Book")]
-        //public IActionResult EditBook(RentalEditDto rentalToEdit)
-        //{
-        //    string sql = @"
-        //    UPDATE BookAppSchema.Rentals 
-        //    SET EndDate = GETDATE()+8
-        //    WHERE RentalId = " + rentalToEdit.RentalId.ToString() +
-        //    "AND UserId = " + this.User.FindFirst("userId")?.Value;
+        [HttpPut("Book")]
+        public IActionResult EditBook(Book bookToEdit)
+        {
+            string sql = @"
+            UPDATE BookAppSchema.Books 
+                SET BookTitle = '" + bookToEdit.BookTitle +
+                "', BookAuthorFirstName = '" + bookToEdit.BookAuthorFirstName +
+                "', BookAuthorLastName = '" + bookToEdit.BookAuthorLastName +
+                "', Genre = '" + bookToEdit.Genre +
+                "', BookImg = '" + bookToEdit.BookImg +
+                "', PublishedYear = '" + bookToEdit.PublishedYear +
+                "'WHERE BookId = " + bookToEdit.BookId.ToString();
 
-        //    if(_dapper.Execute(sql))
-        //    {
-        //        return Ok();
-        //    }
-        //    throw new Exception("Failed to edit rental");
-        //}
+            if(_dapper.Execute(sql))
+            {
+                return Ok();
+            }
+            throw new Exception("Failed to edit rental");
+        }
 
         [HttpDelete("Book/{id}")]
         public IActionResult DeleteBook(int id)

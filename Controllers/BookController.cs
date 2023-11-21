@@ -67,23 +67,29 @@ namespace BookStoreApp
         }
 
         //TODO
-        //[HttpPost("Rental")]
-        //public IActionResult AddBook(RentalAddDto rentalToAdd)
-        //{
-        //    string sql = @"
-        //    INSERT INTO BookAppSchema.Rentals(
-        //        [UserId],
-        //        [BookId],
-        //        [StartDate],
-        //        [EndDate]) VALUES (" + this.User.FindFirst("userId")?.Value
-        //        + ", '" + rentalToAdd.BookId
-        //        + "', GETDATE(), GETDATE()+8 )";
-        //    if(_dapper.Execute(sql))
-        //    {
-        //        return Ok();
-        //    }
-        //    throw new Exception("Failed to create rental");
-        //}
+        [HttpPost("Book")]
+        public IActionResult AddBook(BookAddDto bookToAdd)
+        {
+            string sql = @"
+            INSERT INTO BookAppSchema.Books(
+                    [BookTitle],
+                    [BookAuthorFirstName],
+                    [BookAuthorLastName],
+                    [Genre],
+                    [BookImg],
+                    [PublishedYear]) VALUES (" + 
+                    "'" + bookToAdd.BookTitle +
+                    "','" + bookToAdd.BookAuthorFirstName +
+                    "','" + bookToAdd.BookAuthorLastName +
+                    "','" + bookToAdd.Genre +
+                    "','" + bookToAdd.BookImg +
+                    "', GETDATE())";
+            if(_dapper.Execute(sql))
+            {
+                return Ok();
+            }
+            throw new Exception("Failed to Add Book");
+        }
 
         //TODO
         //[HttpPut("Book")]

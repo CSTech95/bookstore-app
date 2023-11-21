@@ -66,7 +66,6 @@ namespace BookStoreApp
             return _dapper.LoadData<Book>(sqlRes);
         }
 
-        //TODO
         [HttpPost("Book")]
         public IActionResult AddBook(BookAddDto bookToAdd)
         {

@@ -51,7 +51,7 @@ namespace BookStoreApp
         [HttpGet("BooksByAuthor/{author}")]
         public IEnumerable<Book> GetBooksByAuthor(string author)
         {
-            string sqlRes = @"SELECT [BookId],
+            string getBookByAuthor = @"SELECT [BookId],
                     [BookTitle],
                     [BookAuthorFirstName],
                     [BookAuthorLastName],
@@ -61,9 +61,9 @@ namespace BookStoreApp
                 FROM BookAppSchema.Books
                     WHERE BookAuthorFirstName LIKE '%" + author + "'";
 
-            Console.WriteLine(sqlRes);
+            Console.WriteLine(getBookByAuthor);
 
-            return _dapper.LoadData<Book>(sqlRes);
+            return _dapper.LoadData<Book>(getBookByAuthor);
         }
 
         [HttpPost("Book")]
@@ -87,7 +87,7 @@ namespace BookStoreApp
             {
                 return Ok();
             }
-            throw new Exception("Failed to Add Book");
+            throw new Exception("Failed to Add book");
         }
 
         [HttpPut("Book")]
@@ -107,7 +107,7 @@ namespace BookStoreApp
             {
                 return Ok();
             }
-            throw new Exception("Failed to edit rental");
+            throw new Exception("Failed to edit book");
         }
 
         [HttpDelete("Book/{id}")]

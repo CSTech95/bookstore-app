@@ -17,19 +17,25 @@ namespace BookStoreApp
             _dapper = new DataContextDapper(config);
         }
 
-        [HttpGet("Books")]
-        public IEnumerable<Book> GetBooks()
+        [HttpGet("Books/{bookId}")]
+        public IEnumerable<Book> GetBooks(int bookId)
         {
-            string sql = @"SELECT [BookId],
-                    [BookTitle],
-                    [BookAuthorFirstName],
-                    [BookAuthorLastName],
-                    [Genre],
-                    [BookImg],
-                    [PublishedYear]
-                FROM BookAppSchema.Books;";
+            string sql = @"EXEC BookAppSchema.spBooks_Get";
+            if(bookId != 0){
+            sql += " @BookId=" + bookId.ToString();
+            }
+            IEnumerable<Book> books = _dapper.LoadData<Book>(sql);
+            return books;
+            //string sql = @"SELECT [BookId],
+            //        [BookTitle],
+            //        [BookAuthorFirstName],
+            //        [BookAuthorLastName],
+            //        [Genre],
+            //        [BookImg],
+            //        [PublishedYear]
+            //    FROM BookAppSchema.Books;";
 
-            return _dapper.LoadData<Book>(sql);
+            //return _dapper.LoadData<Book>(sql);
         }
 
         [HttpGet("Book/{id}")]

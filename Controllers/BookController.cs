@@ -87,8 +87,7 @@ namespace BookStoreApp
                     "','" + bookToAdd.BookAuthorFirstName +
                     "','" + bookToAdd.BookAuthorLastName +
                     "','" + bookToAdd.Genre +
-                    "','" + bookToAdd.BookImg +
-                    "', GETDATE())";
+                    "','https://placehold.co/600x400@2x.png', GETDATE())";
             if(_dapper.Execute(sql))
             {
                 return Ok();

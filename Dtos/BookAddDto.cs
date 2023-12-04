@@ -6,7 +6,7 @@ namespace BookStoreApp.Dtos
         public string BookAuthorFirstName { get; set; } = "";
         public string BookAuthorLastName { get; set; } = "";
         public string Genre { get; set; } = "";
-        public string BookImg { get; set; } = "";
+        //public string BookImg { get; set; } = "";
         public string PublishedYear { get; set; } = "";
    } 
 }

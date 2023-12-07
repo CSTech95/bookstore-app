@@ -15,7 +15,7 @@ builder.Services.AddCors((options) =>
         options.AddPolicy("DevCors", (corsBuilder) =>
             {
                 //default Front end framework ports for React,Angular,Vue Ports
-                corsBuilder.WithOrigins("http://localhost:3000", "http://localhost:4200", "http://localhost:8000")
+                corsBuilder.WithOrigins("http://localhost:3000", "http://localhost:4200", "http://localhost:8000", "http://localhost:5173")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials();

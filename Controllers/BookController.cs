@@ -28,24 +28,8 @@ namespace BookStoreApp
             return books;
         }
 
-        //[HttpGet("Book/{id}")]
-        //public Book GetSingleBookById(int id)
-        //{
-        //    string sql = @"SELECT [BookId],
-        //            [BookTitle],
-        //            [BookAuthorFirstName],
-        //            [BookAuthorLastName],
-        //            [Genre],
-        //            [BookImg],
-        //            [PublishedYear]
-        //        FROM BookAppSchema.Books
-        //            WHERE BookId =" + id.ToString();
-
-        //    return _dapper.LoadDataSingle<Book>(sql);
-        //}
-
-        [HttpGet("BooksByAuthor/{author}")]
-        public IEnumerable<Book> GetBooksByAuthor(string author)
+        [HttpGet("BooksByAuthor/{name}")]
+        public IEnumerable<Book> GetBooksByAuthor(string name)
         {
             string getBookByAuthor = @"SELECT [BookId],
                     [BookTitle],
@@ -55,7 +39,7 @@ namespace BookStoreApp
                     [BookImg],
                     [PublishedYear]
                 FROM BookAppSchema.Books
-                    WHERE BookAuthorFirstName LIKE '%" + author + "'";
+                    WHERE BookAuthorFirstName LIKE '%" + name + "'";
 
             Console.WriteLine(getBookByAuthor);
 

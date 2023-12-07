@@ -26,33 +26,23 @@ namespace BookStoreApp
             }
             IEnumerable<Book> books = _dapper.LoadData<Book>(sql);
             return books;
-            //string sql = @"SELECT [BookId],
-            //        [BookTitle],
-            //        [BookAuthorFirstName],
-            //        [BookAuthorLastName],
-            //        [Genre],
-            //        [BookImg],
-            //        [PublishedYear]
-            //    FROM BookAppSchema.Books;";
-
-            //return _dapper.LoadData<Book>(sql);
         }
 
-        [HttpGet("Book/{id}")]
-        public Book GetSingleBookById(int id)
-        {
-            string sql = @"SELECT [BookId],
-                    [BookTitle],
-                    [BookAuthorFirstName],
-                    [BookAuthorLastName],
-                    [Genre],
-                    [BookImg],
-                    [PublishedYear]
-                FROM BookAppSchema.Books
-                    WHERE BookId =" + id.ToString();
+        //[HttpGet("Book/{id}")]
+        //public Book GetSingleBookById(int id)
+        //{
+        //    string sql = @"SELECT [BookId],
+        //            [BookTitle],
+        //            [BookAuthorFirstName],
+        //            [BookAuthorLastName],
+        //            [Genre],
+        //            [BookImg],
+        //            [PublishedYear]
+        //        FROM BookAppSchema.Books
+        //            WHERE BookId =" + id.ToString();
 
-            return _dapper.LoadDataSingle<Book>(sql);
-        }
+        //    return _dapper.LoadDataSingle<Book>(sql);
+        //}
 
         [HttpGet("BooksByAuthor/{author}")]
         public IEnumerable<Book> GetBooksByAuthor(string author)
@@ -118,9 +108,7 @@ namespace BookStoreApp
         [HttpDelete("Book/{id}")]
         public IActionResult DeleteBook(int id)
         {
-            string sql = @"DELETE FROM BookAppSchema.Books
-                WHERE BookId = " + id.ToString()+
-                    "AND UserId = " + this.User.FindFirst("userId")?.Value;;
+                        string sql = @"EXEC BookAppSchema.spBook_Delete @BookId="+id.ToString();
             
             if(_dapper.Execute(sql))
             {

@@ -49,19 +49,21 @@ namespace BookStoreApp
         [HttpPost("Book")]
         public IActionResult AddBook(BookAddDto bookToAdd)
         {
-            string sql = @"
-            INSERT INTO BookAppSchema.Books(
-                    [BookTitle],
-                    [BookAuthorFirstName],
-                    [BookAuthorLastName],
-                    [Genre],
-                    [BookImg],
-                    [PublishedYear]) VALUES (" + 
-                    "'" + bookToAdd.BookTitle +
-                    "','" + bookToAdd.BookAuthorFirstName +
-                    "','" + bookToAdd.BookAuthorLastName +
-                    "','" + bookToAdd.Genre +
-                    "','https://placehold.co/600x400@2x.png', GETDATE())";
+            string sql = @"EXEC BookAppSchema.spBooks_Upsert";
+
+            //string sql = @"
+            //INSERT INTO BookAppSchema.Books(
+            //        [BookTitle],
+            //        [BookAuthorFirstName],
+            //        [BookAuthorLastName],
+            //        [Genre],
+            //        [BookImg],
+            //        [PublishedYear]) VALUES (" + 
+            //        "'" + bookToAdd.BookTitle +
+            //        "','" + bookToAdd.BookAuthorFirstName +
+            //        "','" + bookToAdd.BookAuthorLastName +
+            //        "','" + bookToAdd.Genre +
+            //        "','https://placehold.co/600x400@2x.png', GETDATE())";
             if(_dapper.Execute(sql))
             {
                 return Ok();

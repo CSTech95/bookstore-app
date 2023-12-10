@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreApp
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class RentalController: ControllerBase
@@ -17,15 +17,30 @@ namespace BookStoreApp
             _dapper = new DataContextDapper(config);
         }
 
-        [HttpGet("Rental")]
-        public IEnumerable<Rental> GetRentals()
+        [HttpGet("Rentals/{id}/{searchParam}")]
+        public IEnumerable<Rental> GetRentals(int id=0, string searchParam="None")
         {
-            string sql = @"SELECT [RentalId],
-                    [UserId],
-                    [BookId],
-                    [StartDate],
-                    [EndDate] 
-                FROM BookAppSchema.Rentals;";
+            string sql = @"EXEC BookAppSchema.spRentals_Get";
+            string parameters = "";
+            if(id != 0)
+            {
+                parameters += ", @RentalId=" + id.ToString();
+            }
+            if(searchParam != "None")
+            {
+                parameters += ", @searchValue='" + searchParam+"'";
+            }
+
+            if (parameters.Length>0)
+            {   
+                sql += parameters.Substring(1); 
+            }
+            //string sql = @"SELECT [RentalId],
+            //        [UserId],
+            //        [BookId],
+            //        [StartDate],
+            //        [EndDate] 
+            //    FROM BookAppSchema.Rentals;";
 
             return _dapper.LoadData<Rental>(sql);
         }

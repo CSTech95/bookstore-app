@@ -17,79 +17,70 @@ namespace BookStoreApp
             _dapper = new DataContextDapper(config);
         }
 
-        [HttpGet("Books/{bookId}")]
-        public IEnumerable<Book> GetBooks(int bookId)
+        //Get all Books, Or a Book by Id, or search all Books based on 
+        //Book Title, or Author's First or last name
+        [HttpGet("Books/{id}/{searchParam}")]
+        public IEnumerable<Book> GetBooks(int id=0, string searchParam = "None")
         {
             string sql = @"EXEC BookAppSchema.spBooks_Get";
-            if(bookId != 0){
-            sql += " @BookId=" + bookId.ToString();
-            }
-            IEnumerable<Book> books = _dapper.LoadData<Book>(sql);
-            return books;
-        }
-
-        [HttpGet("BooksByAuthor/{name}")]
-        public IEnumerable<Book> GetBooksByAuthor(string name)
-        {
-            string getBookByAuthor = @"SELECT [BookId],
-                    [BookTitle],
-                    [BookAuthorFirstName],
-                    [BookAuthorLastName],
-                    [Genre],
-                    [BookImg],
-                    [PublishedYear]
-                FROM BookAppSchema.Books
-                    WHERE BookAuthorFirstName LIKE '%" + name + "'";
-
-            Console.WriteLine(getBookByAuthor);
-
-            return _dapper.LoadData<Book>(getBookByAuthor);
-        }
-
-        [HttpPost("Book")]
-        public IActionResult AddBook(BookAddDto bookToAdd)
-        {
-            string sql = @"EXEC BookAppSchema.spBooks_Upsert";
-
-            //string sql = @"
-            //INSERT INTO BookAppSchema.Books(
-            //        [BookTitle],
-            //        [BookAuthorFirstName],
-            //        [BookAuthorLastName],
-            //        [Genre],
-            //        [BookImg],
-            //        [PublishedYear]) VALUES (" + 
-            //        "'" + bookToAdd.BookTitle +
-            //        "','" + bookToAdd.BookAuthorFirstName +
-            //        "','" + bookToAdd.BookAuthorLastName +
-            //        "','" + bookToAdd.Genre +
-            //        "','https://placehold.co/600x400@2x.png', GETDATE())";
-            if(_dapper.Execute(sql))
+            string parameters = "";
+            if(id != 0)
             {
-                return Ok();
+                parameters += ", @BookId=" + id.ToString();
             }
-            throw new Exception("Failed to Add book");
+            if(searchParam != "None")
+            {
+                parameters += ", @searchValue='" + searchParam+"'";
+            }
+
+            if (parameters.Length>0)
+            {   
+                sql += parameters.Substring(1); 
+            }
+            return _dapper.LoadData<Book>(sql);
         }
 
         [HttpPut("Book")]
-        public IActionResult EditBook(Book bookToEdit)
+        public IActionResult AddBook(BookAddDto bookToAdd)
         {
-            string sql = @"
-            UPDATE BookAppSchema.Books 
-                SET BookTitle = '" + bookToEdit.BookTitle +
-                "', BookAuthorFirstName = '" + bookToEdit.BookAuthorFirstName +
-                "', BookAuthorLastName = '" + bookToEdit.BookAuthorLastName +
-                "', Genre = '" + bookToEdit.Genre +
-                "', BookImg = '" + bookToEdit.BookImg +
-                "', PublishedYear = '" + bookToEdit.PublishedYear +
-                "'WHERE BookId = " + bookToEdit.BookId.ToString();
+            string sql = @"EXEC BookAppSchema.spBooks_Upsert
+                               @BookTitle = '"+bookToAdd.BookTitle +
+                               "', @BookAuthorFirstName= '"+bookToAdd.BookAuthorFirstName +
+                               "', @BookAuthorLastName= '"+bookToAdd.BookAuthorLastName + 
+                               "', @Genre= '"+bookToAdd.Genre +
+                               "', @BookImg= '"+bookToAdd.BookImg +
+                               "', @PublishedYear= '"+bookToAdd.PublishedYear+ "'";
 
+            if(bookToAdd.BookId>0){
+                sql += ", @BookId = " + bookToAdd.BookId;
+            }
             if(_dapper.Execute(sql))
             {
                 return Ok();
             }
-            throw new Exception("Failed to edit book");
+            Console.WriteLine(sql);
+            throw new Exception("Failed to Add book");
         }
+
+        //[HttpPut("Book")]
+        //public IActionResult EditBook(Book bookToEdit)
+        //{
+        //    string sql = @"
+        //    UPDATE BookAppSchema.Books 
+        //        SET BookTitle = '" + bookToEdit.BookTitle +
+        //        "', BookAuthorFirstName = '" + bookToEdit.BookAuthorFirstName +
+        //        "', BookAuthorLastName = '" + bookToEdit.BookAuthorLastName +
+        //        "', Genre = '" + bookToEdit.Genre +
+        //        "', BookImg = '" + bookToEdit.BookImg +
+        //        "', PublishedYear = '" + bookToEdit.PublishedYear +
+        //        "'WHERE BookId = " + bookToEdit.BookId.ToString();
+
+        //    if(_dapper.Execute(sql))
+        //    {
+        //        return Ok();
+        //    }
+        //    throw new Exception("Failed to edit book");
+        //}
 
         [HttpDelete("Book/{id}")]
         public IActionResult DeleteBook(int id)

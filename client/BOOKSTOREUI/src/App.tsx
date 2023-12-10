@@ -34,7 +34,7 @@ function App() {
 			<div>T</div>
 			{books.map((book: Book) => {
 				return (
-					<div>
+					<div key={book.bookId}>
 						<RenderedBooks bookTitle={book.bookTitle} />
 					</div>
 				);

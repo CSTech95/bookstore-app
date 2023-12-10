@@ -45,19 +45,19 @@ namespace BookStoreApp
             return _dapper.LoadData<Rental>(sql);
         }
 
-        [HttpGet("Rental/{id}")]
-        public Rental GetSingleRental(int id)
-        {
-            string sql = @"SELECT [RentalId],
-                    [UserId],
-                    [BookId],
-                    [StartDate],
-                    [EndDate] 
-                FROM BookAppSchema.Rentals
-                    WHERE RentalId =" + id.ToString();
+        //[HttpGet("Rental/{id}")]
+        //public Rental GetSingleRental(int id)
+        //{
+        //    string sql = @"SELECT [RentalId],
+        //            [UserId],
+        //            [BookId],
+        //            [StartDate],
+        //            [EndDate] 
+        //        FROM BookAppSchema.Rentals
+        //            WHERE RentalId =" + id.ToString();
 
-            return _dapper.LoadDataSingle<Rental>(sql);
-        }
+        //    return _dapper.LoadDataSingle<Rental>(sql);
+        //}
         [HttpGet("RentalsOfUser/{uid}")]
         public IEnumerable<Rental> GetRentalsOfUser(int uid)
         {

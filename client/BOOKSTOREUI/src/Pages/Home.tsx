@@ -24,10 +24,10 @@ const defaultTheme = createTheme();
 export default function Home() {
 	const [books, setBooks] = useState([]);
 
-	async function resultedBookData() {
+	async function resultedBookData(amount: number) {
 		try {
 			console.log("Func Reached \n");
-			const response = await fetch("http://localhost:5000/Book/Books/0/None");
+			const response = await fetch(`http://localhost:5000/Book/Book/amount/${amount}`);
 			const booksRes = await response.json();
 			setBooks(booksRes);
 		} catch (error) {
@@ -46,7 +46,7 @@ export default function Home() {
 	};
 
 	useEffect(() => {
-		resultedBookData();
+		resultedBookData(3);
 	}, []);
 	return (
 		<ThemeProvider theme={defaultTheme}>

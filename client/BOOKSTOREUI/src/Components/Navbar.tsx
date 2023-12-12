@@ -56,7 +56,9 @@ function Navbar() {
 							textDecoration: "none",
 						}}
 					>
-						LOGO
+						<Link style={{ color: "#FFFFFF" }} to="/Home">
+							LOGO
+						</Link>
 					</Typography>
 
 					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

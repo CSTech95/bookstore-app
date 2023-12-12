@@ -49,7 +49,7 @@ export default function Home() {
 		resultedBookData(3);
 	}, []);
 	return (
-		<ThemeProvider theme={defaultTheme}>
+		<>
 			<CssBaseline />
 			<main>
 				{/* Hero unit */}
@@ -105,6 +105,6 @@ export default function Home() {
 					</Grid>
 				</Container>
 			</main>
-		</ThemeProvider>
+		</>
 	);
 }

@@ -49,7 +49,7 @@ export default function MyRentals() {
 		//resultedBookData();
 	}, []);
 	return (
-		<ThemeProvider theme={defaultTheme}>
+		<>
 			<CssBaseline />
 			<main>
 				{/* Hero unit */}
@@ -105,6 +105,6 @@ export default function MyRentals() {
 					</Grid>*/}
 				</Container>
 			</main>
-		</ThemeProvider>
+		</>
 	);
 }

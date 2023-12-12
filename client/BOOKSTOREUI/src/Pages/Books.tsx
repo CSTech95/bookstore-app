@@ -22,34 +22,34 @@ import RenderedBooks from "../Components/RenderedBooks";
 const defaultTheme = createTheme();
 
 export default function Books() {
-	//const [books, setBooks] = useState([]);
+	const [books, setBooks] = useState([]);
 
-	//async function resultedBookData() {
-	//	try {
-	//		console.log("Func Reached \n");
-	//		const response = await fetch("http://localhost:5000/Book/Books/0/None");
-	//		const booksRes = await response.json();
-	//		setBooks(booksRes);
-	//	} catch (error) {
-	//		console.error("Error fetching data:", error);
-	//	}
-	//}
+	async function resultedBookData() {
+		try {
+			console.log("Func Reached \n");
+			const response = await fetch("http://localhost:5000/Book/Books/0/None");
+			const booksRes = await response.json();
+			setBooks(booksRes);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	}
 
-	//type Book = {
-	//	bookId?: number;
-	//	bookTitle?: string;
-	//	bookAuthorFirstName?: string;
-	//	bookAuthorLastName?: string;
-	//	genre?: string;
-	//	bookImg?: string;
-	//	publishedYear?: string;
-	//};
+	type Book = {
+		bookId?: number;
+		bookTitle?: string;
+		bookAuthorFirstName?: string;
+		bookAuthorLastName?: string;
+		genre?: string;
+		bookImg?: string;
+		publishedYear?: string;
+	};
 
 	useEffect(() => {
-		//resultedBookData();
+		resultedBookData();
 	}, []);
 	return (
-		<ThemeProvider theme={defaultTheme}>
+		<>
 			<CssBaseline />
 			<main>
 				{/* Hero unit */}
@@ -76,7 +76,7 @@ export default function Books() {
 				</Box>
 				<Container sx={{ py: 8 }} maxWidth="md">
 					{/* End hero unit */}
-					{/*<Grid container spacing={4}>
+					<Grid container spacing={4}>
 						{books.map((book: Book) => (
 							<Grid item key={book.bookId} xs={12} sm={6} md={4}>
 								<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -102,9 +102,9 @@ export default function Books() {
 								</Card>
 							</Grid>
 						))}
-					</Grid>*/}
+					</Grid>
 				</Container>
 			</main>
-		</ThemeProvider>
+		</>
 	);
 }

@@ -4,19 +4,28 @@ import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider, Route, Link } from "react-router-dom";
 import RenderedBooks from "./Components/RenderedBooks.tsx";
+import Home from "./Pages/Home.tsx";
+import Books from "./Pages/Books.tsx";
+import MyRentals from "./Pages/MyRentals.tsx";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: (
-			<div>
-				<App />
-			</div>
-		),
-	},
-	{
-		path: "/Book",
-		element: <RenderedBooks />,
+		element: <App />,
+		children: [
+			{
+				path: "/Home",
+				element: <Home />,
+			},
+			{
+				path: "/Books",
+				element: <Books />,
+			},
+			{
+				path: "/MyRentals",
+				element: <MyRentals />,
+			},
+		],
 	},
 ]);
 

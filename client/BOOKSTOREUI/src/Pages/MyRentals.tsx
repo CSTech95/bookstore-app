@@ -16,62 +16,41 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from "react";
-import RenderedBooks from "./RenderedBooks";
-
-function Copyright() {
-	return (
-		<Typography variant="body2" color="text.secondary" align="center">
-			{"Copyright © "}
-			<Link color="inherit" href="https://mui.com/">
-				Your Website
-			</Link>{" "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	);
-}
+import RenderedBooks from "../Components/RenderedBooks";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Home() {
-	const [books, setBooks] = useState([]);
+export default function MyRentals() {
+	//const [books, setBooks] = useState([]);
 
-	async function resultedBookData() {
-		try {
-			console.log("Func Reached \n");
-			const response = await fetch("http://localhost:5000/Book/Books/0/None");
-			const booksRes = await response.json();
-			setBooks(booksRes);
-		} catch (error) {
-			console.error("Error fetching data:", error);
-		}
-	}
+	//async function resultedBookData() {
+	//	try {
+	//		console.log("Func Reached \n");
+	//		const response = await fetch("http://localhost:5000/Book/Books/0/None");
+	//		const booksRes = await response.json();
+	//		setBooks(booksRes);
+	//	} catch (error) {
+	//		console.error("Error fetching data:", error);
+	//	}
+	//}
 
-	type Book = {
-		bookId?: number;
-		bookTitle?: string;
-		bookAuthorFirstName?: string;
-		bookAuthorLastName?: string;
-		genre?: string;
-		bookImg?: string;
-		publishedYear?: string;
-	};
+	//type Book = {
+	//	bookId?: number;
+	//	bookTitle?: string;
+	//	bookAuthorFirstName?: string;
+	//	bookAuthorLastName?: string;
+	//	genre?: string;
+	//	bookImg?: string;
+	//	publishedYear?: string;
+	//};
 
 	useEffect(() => {
-		resultedBookData();
+		//resultedBookData();
 	}, []);
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<CssBaseline />
-			<AppBar position="relative">
-				<Toolbar>
-					{/*<CameraIcon sx={{ mr: 2 }} />*/}
-					<Typography variant="h6" color="inherit" noWrap>
-						Oxford's Bookstore
-					</Typography>
-				</Toolbar>
-			</AppBar>
 			<main>
 				{/* Hero unit */}
 				<Box
@@ -83,7 +62,7 @@ export default function Home() {
 				>
 					<Container maxWidth="sm">
 						<Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
-							Oxford's Bookstore
+							Rentals
 						</Typography>
 						<Typography variant="h5" align="center" color="text.secondary" paragraph>
 							Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don&apos;t simply skip over it
@@ -97,7 +76,7 @@ export default function Home() {
 				</Box>
 				<Container sx={{ py: 8 }} maxWidth="md">
 					{/* End hero unit */}
-					<Grid container spacing={4}>
+					{/*<Grid container spacing={4}>
 						{books.map((book: Book) => (
 							<Grid item key={book.bookId} xs={12} sm={6} md={4}>
 								<Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -123,20 +102,9 @@ export default function Home() {
 								</Card>
 							</Grid>
 						))}
-					</Grid>
+					</Grid>*/}
 				</Container>
 			</main>
-			{/* Footer */}
-			<Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-				<Typography variant="h6" align="center" gutterBottom>
-					Footer
-				</Typography>
-				<Typography variant="subtitle1" align="center" color="text.secondary" component="p">
-					Something here to give the footer a purpose!
-				</Typography>
-				<Copyright />
-			</Box>
-			{/* End footer */}
 		</ThemeProvider>
 	);
 }

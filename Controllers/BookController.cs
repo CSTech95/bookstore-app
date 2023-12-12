@@ -93,5 +93,12 @@ namespace BookStoreApp
             }
             throw new Exception("Failed to delete book");
         }
+        [HttpGet("Book/amount/{amount}")]
+        public IEnumerable<Book> GetTwoBooks(int amount)
+        {
+                        string sql = @"EXEC BookAppSchema.spBooks_Get_An_Amount_Of_Books_By_Input @amount=" + amount.ToString();
+            
+                       return _dapper.LoadData<Book>(sql);
+        }
     }
 }

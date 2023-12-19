@@ -1,5 +1,5 @@
 //import * as React from "react";
-import AppBar from "@mui/material/AppBar";
+
 import Button from "@mui/material/Button";
 //import CameraIcon from "@mui/icons-material/PhotoCamera";
 import Card from "@mui/material/Card";
@@ -10,16 +10,15 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
+
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 import { useState, useEffect } from "react";
 import RenderedBooks from "../Components/RenderedBooks";
+import { FormControl, Input, InputLabel } from "@mui/material";
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+import { Book } from "../Types.tsx";
 
 export default function Books() {
 	const [books, setBooks] = useState([]);
@@ -34,15 +33,26 @@ export default function Books() {
 			console.error("Error fetching data:", error);
 		}
 	}
+	async function searchBooks(id: number = 0, searchParam: string = "None") {
+		try {
+			if (searchParam.length == 0) {
+				searchParam = "None";
+			}
+			console.log("Func Reached \n");
+			const response = await fetch(`http://localhost:5000/Book/Books/${id}/${searchParam}`);
+			const booksRes = await response.json();
+			setBooks(booksRes);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	}
 
-	type Book = {
-		bookId?: number;
-		bookTitle?: string;
-		bookAuthorFirstName?: string;
-		bookAuthorLastName?: string;
-		genre?: string;
-		bookImg?: string;
-		publishedYear?: string;
+	const keyPress = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.keyCode == 13) {
+			console.log("value", e.target.value);
+			searchBooks(0, e.target.value);
+			// put the login here
+		}
 	};
 
 	useEffect(() => {
@@ -76,6 +86,10 @@ export default function Books() {
 				</Box>
 				<Container sx={{ py: 8 }} maxWidth="md">
 					{/* End hero unit */}
+					<FormControl variant="standard">
+						<InputLabel htmlFor="component-simple">Find Books</InputLabel>
+						<Input onKeyDown={keyPress} id="component-simple" defaultValue="Search" />
+					</FormControl>
 					<Grid container spacing={4}>
 						{books.map((book: Book) => (
 							<Grid item key={book.bookId} xs={12} sm={6} md={4}>

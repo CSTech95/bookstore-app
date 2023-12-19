@@ -57,7 +57,7 @@ function Navbar() {
 						}}
 					>
 						<Link style={{ color: "#FFFFFF" }} to="/Home">
-							LOGO
+							<Avatar src="../public/book1.png" alt="Book" variant="square" />
 						</Link>
 					</Typography>
 
@@ -117,7 +117,7 @@ function Navbar() {
 							textDecoration: "none",
 						}}
 					>
-						LOGO
+						BookMe
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 						<Button onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>

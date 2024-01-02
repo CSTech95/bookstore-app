@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gB2467/6ulbnz0mkFOrAtTa2um3rfruY6C4tXhR2hB4wm2QeTxEPEIGl3XYrg5XU7OYkI6F+zeauV5leoatBGg==",
+  "dgSpecHash": "nHZS49UhJ6fg0imXIWWVrFfkF1iVUpBracMbqVJShZFlUcK2j2prRxUmlHoIWqXxJu8je8AUhHIX1reo4xMBug==",
   "success": true,
-  "projectFilePath": "/Users/aser/Documents/dotnet-projects/BookStoreApp/BookStoreApp.csproj",
+  "projectFilePath": "/Users/aser/Documents/dotnet-projects/BookStoreAPI/BookStoreApp.csproj",
   "expectedPackageFiles": [
     "/Users/aser/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/aser/.nuget/packages/azure.core/1.25.0/azure.core.1.25.0.nupkg.sha512",

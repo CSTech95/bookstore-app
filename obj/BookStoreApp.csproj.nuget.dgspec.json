@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/aser/Documents/dotnet-projects/BookStoreApp/BookStoreApp.csproj": {}
+    "/Users/aser/Documents/dotnet-projects/BookStoreAPI/BookStoreApp.csproj": {}
   },
   "projects": {
-    "/Users/aser/Documents/dotnet-projects/BookStoreApp/BookStoreApp.csproj": {
+    "/Users/aser/Documents/dotnet-projects/BookStoreAPI/BookStoreApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/aser/Documents/dotnet-projects/BookStoreApp/BookStoreApp.csproj",
+        "projectUniqueName": "/Users/aser/Documents/dotnet-projects/BookStoreAPI/BookStoreApp.csproj",
         "projectName": "BookStoreApp",
-        "projectPath": "/Users/aser/Documents/dotnet-projects/BookStoreApp/BookStoreApp.csproj",
+        "projectPath": "/Users/aser/Documents/dotnet-projects/BookStoreAPI/BookStoreApp.csproj",
         "packagesPath": "/Users/aser/.nuget/packages/",
-        "outputPath": "/Users/aser/Documents/dotnet-projects/BookStoreApp/obj/",
+        "outputPath": "/Users/aser/Documents/dotnet-projects/BookStoreAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/aser/.nuget/NuGet/NuGet.Config"
